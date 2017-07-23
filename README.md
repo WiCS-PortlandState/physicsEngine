@@ -25,7 +25,8 @@ OUTPUT: <my output type>
 */
 ```
 The description should be thorough but not unecessarily verbose; two sentences long at maximum. If the description needs 
-to be longer, it might be a hint that the function should be broken up.
+to be longer, it might be a hint that the function should be broken up. A function that only returns or sets a value may 
+not need comments.
 
 ### comment styles
 Comments shouldn't be superfluous but always err on the side of more detailed comments. In-line comments should only be 

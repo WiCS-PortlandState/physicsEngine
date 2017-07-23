@@ -1,3 +1,6 @@
+/*
+This class represents the viewport that the user is gaming in. 
+*/
 function Space() {
     this.objects = null;
     this.borders = null;

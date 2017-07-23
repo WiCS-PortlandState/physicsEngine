@@ -9,6 +9,9 @@ function Collider(physics, bound) {
     this.bound = bound;
 }
 
+/*
+This bound defines a rectangle with a center point that may be bound to a certain object.
+*/
 function RectangularBound(height, width, centerPosition) {
     this.height = height;
     this.width = width;
@@ -32,6 +35,9 @@ function RectangularBound(height, width, centerPosition) {
     }
 }
 
+/*
+This bound defines a circle with radius and center point that may be bound to a certain object.
+*/
 function CircularBound(radius, centerPosition) {
     this.radius = radius;
     this.center = centerPosition;
