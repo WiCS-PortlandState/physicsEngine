@@ -16,9 +16,21 @@ be capitalized and use camel-case. Objects should use a builder-style of constru
 that set properties are named `withPropertyName()`.
 
 ### function styles
+Every function should have a comment associated with it that defines the input, output and description in the format:
+```
+/*
+INPUT: <my input type>
+OUTPUT: <my output type>
+<my description>
+*/
+```
+The description should be thorough but not unecessarily verbose; two sentences long at maximum. If the description needs 
+to be longer, it might be a hint that the function should be broken up.
 
 ### comment styles
-
+Comments shouldn't be superfluous but always err on the side of more detailed comments. In-line comments should only be 
+used when there is a particularly complex bit of logic. Comments should be grammatically correct and not contain spelling errors. 
+Comments above functions and classes should be block-style.
 
 ## Conventions
 
