@@ -4,7 +4,7 @@ viewport and is where all the objects associated with viewport are stored. Its m
 are to detect collisions and update all objects inside the viewport.
 */
 function Space() {
-    this.objects = null;
+    this.objects = [];
     this.container = null;
     var self = this;
 
@@ -42,6 +42,10 @@ function Space() {
             }
             self.objects[i].update();
         }
+    }
+
+    this.addObject = function(object) {
+        self.objects.add(object);
     }
 
     // Builder functions

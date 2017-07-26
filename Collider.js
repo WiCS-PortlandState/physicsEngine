@@ -14,56 +14,21 @@ function Collider(bound) {
 }
 
 /*
-This bound defines a rectangle with a center point that may be bound to a certain object. The 
-center is defined as an offset from the attached Physics object's position.
-*/
-function RectangularBound(height, width, centerPosition, physics) {
-    this.height = height;
-    this.width = width;
-    this.physics = physics;
-    this.offsetX = physics.position.x - centerPosition.x;
-    this.offsetY = physics.position.y - centerPosition.y;
-    var self = this;
-
-    this.detectCollision = function(bound) {
-
-    }
-
-    this.topBound = function() {
-        return self.center().y - (self.height / 2);
-    }
-
-    this.rightBound = function() {
-        return self.center().x + (self.width / 2);
-    }
-
-    this.bottomBount = function() {
-        return self.center().y + (self.height / 2);
-    }
-
-    this.leftBound = function() {
-        return self.center().x - (self.width / 2);
-    }
-
-    this.center = function() {
-        return new Position(self.physics.position.x - self.offsetX, self.physics.position.y - self.offsetY);
-    }
-}
-
-/*
 This bound defines a circle with radius and center point that may be bound to a certain object. The 
 center is defined as an offset from the attached Physics object's position.
 */
 function CircularBound(radius, centerPosition, physics) {
     this.radius = radius;
-    this.center = centerPosition;
     this.physics = physics;
     this.offsetX = physics.position.x - centerPosition.x;
     this.offsetY = physics.position.y - centerPosition.y;
     var self = this;
 
     this.detectCollision = function(bound) {
-        
+        var bCenter = bound.center();
+        var sCenter = self.center();
+        return Math.sqrt(Math.pow((bCenter.x - sCenter.x), 2) +
+                Math.pow((bCenter.y - sCenter.y), 2)) <= 0;
     }
 
     this.topBound = function() {
