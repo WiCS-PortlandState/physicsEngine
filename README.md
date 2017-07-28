@@ -5,8 +5,8 @@
 Before contributing, please read through this document paying special attention to the style guide and conventions 
 sections. Pull requests that do not conform to the style and convention standards laid out here will not be merged. 
 All pull requests must also be associated with an issue. If you want to contribute something that is not currently 
-slated as an issue, you must first request that a ticket be made so your pull request can be considered. A PR with 
-no associated issue will not be merged.
+slated as an issue, you must first create an issue so your pull request can be considered. A PR with 
+no associated issue will not be merged. Once you have made a PR, request a review from one of the maintainers. 
 
 ## Style guide
 
