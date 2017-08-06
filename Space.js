@@ -6,6 +6,7 @@ are to detect collisions and update all objects inside the viewport.
 function Space() {
     this.objects = [];
     this.container = null;
+    this.gravity;
     var self = this;
 
     /*
@@ -19,10 +20,13 @@ function Space() {
             // and issues an event to document, if a collision has occured.
             var collision = self.container.detectContainmentCollision(self.objects[i]);
             if(collision != null) {
-                var event = new CustomEvent("Border Collision", 
+                var event;
+                event = new CustomEvent("Border Collision",
                     {
-                        border: collision, 
-                        object: self.objects[i].name
+                        detail: {
+                            border: collision,
+                            object: self.objects[i].name
+                        }
                     }
                 );
                 document.dispatchEvent(event);
@@ -31,15 +35,18 @@ function Space() {
             // other objects and issues an event to document, if a collision has occured.
             for(var j = i + 1; j < len; j++) {
                 if (self.objects[i].collidesWith(self.objects[j])) {
-                    var event = new CustomEvent("Object Collision",
+                    event = new CustomEvent("Object Collision",
                         {
-                            firstObject: self.objects[i].name,
-                            secondObject: self.objects[j].name
+                            detail: {
+                                firstObject: self.objects[i].name,
+                                secondObject: self.objects[j].name
+                            }
                         }
                     );
                     document.dispatchEvent(event);
                 }
             }
+            self.objects[i].physics.position.addVector(self.gravity);
             self.objects[i].update();
         }
     }
@@ -57,6 +64,11 @@ function Space() {
 
     this.withContainer = function (width, height) {
         self.container = new Container(width, height);
+        return self;
+    }
+
+    this.withGravity = function(amount) {
+        self.gravity = new Vector(0, amount * -1);
         return self;
     }
 

@@ -18,7 +18,7 @@ function Physics() {
     them. Also updates the force vectors to account for drag after updating the position and 
     rotation.
     */
-    this.update() = function() {
+    this.update = function() {
         this.position.update();
         this.orientation.update();
         this.position.vector.applyDrag(drag);
