@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test game</title>
+</head>
+<body>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+<script src="Physics.js"></script>
+<script src="Graphic.js"></script>
+<script src="Collider.js"></script>
+<script src="Object.js"></script>
+<script src="Space.js"></script>
+<script>
+    var context = document.getElementById("gameCanvas").getContext("2d");
+    var space = new Space()
+        .withContainer(new Container(800, 600))
+        .withContext(context);
+    var physics = new Physics()
+        .withDrag(0.1)
+        .withPosition(new Position(400, 300));
+    space.addObject(new Object()
+        .withPhysics(physics)
+        .withCollider(new Collider(new CircularBound(50, physics.position, physics)))
+        .withGraphic(new Graphic().withObject(new Circle(50), physics.position), context));
+    space.startAnimation();
+</script>
+</body>
+</html>

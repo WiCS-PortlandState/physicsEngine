@@ -4,10 +4,16 @@ viewport and is where all the objects associated with viewport are stored. Its m
 are to detect collisions and update all objects inside the viewport.
 */
 function Space() {
-    this.objects = [];
+    this.objects = new Array();
     this.container = null;
-    this.gravity;
+    this.gravity = new Vector(0, 0);
+    this.context;
+    this.fps = 30; // frames per second
     var self = this;
+
+    this.startAnimation = function() {
+        window.setInterval(self.update, 1000 / self.fps);
+    }
 
     /*
     INPUT: n/a
@@ -16,8 +22,8 @@ function Space() {
     */
     this.update = function () {
         for (var i = 0, len = self.objects.length; i < len; i++) {
-            // This block determines if the current object has collided with an outter border
-            // and issues an event to document, if a collision has occured.
+            // This block determines if the current object has collided with an outer border
+            // and issues an event to document, if a collision has occurred.
             var collision = self.container.detectContainmentCollision(self.objects[i]);
             if(collision != null) {
                 var event;
@@ -52,13 +58,19 @@ function Space() {
     }
 
     this.addObject = function(object) {
-        self.objects.add(object);
+        if(object.graphic != null) object.graphic.withContext(self.context);
+        self.objects.push(object);
     }
 
     // Builder functions
 
     this.withObjects = function (listOfObjects) {
         self.objects = listOfObjects;
+        if(self.context != null) {
+            for (var i = 0; i < self.objects.length; i++) {
+                if (self.objects[i].graphic != null) self.objects[i].graphic.withContext(self.context);
+            }
+        }
         return self;
     }
 
@@ -69,6 +81,21 @@ function Space() {
 
     this.withGravity = function(amount) {
         self.gravity = new Vector(0, amount * -1);
+        return self;
+    }
+
+    this.withContext = function(context) {
+        self.context = context;
+        if(self.objects != null) {
+            for (var i = 0; i < self.objects.length; i++) {
+                if (self.objects[i].graphic != null) self.objects[i].graphic.withContext(self.context);
+            }
+        }
+        return self;
+    }
+
+    this.withFPS = function(fps) {
+        self.fps = fps;
         return self;
     }
 
@@ -90,23 +117,25 @@ function Container(width, height) {
             may be a null value if no collision.
     If a collision is detected, the object's vector is reversed and the border it collided with is returned.
     */
-    this.enforceContainment = function (object) {
-        if (object.collider != null) {
-            if (object.collider.topBound() <= 0) {
-                object.physics.position.reverseYVector();
-                return "top";
-            }
-            else if ((self.height - object.collider.bottomBound()) <= 0) {
-                object.physics.position.reverseYVector();
-                return "bottom";
-            }
-            if (object.collider.leftBound() <= 0) {
-                object.physics.position.reverseXVector();
-                return "left";
-            }
-            else if ((self.width - object.collider.rightBound) <= 0) {
-                object.physics.position.reverseXVector();
-                return "right";
+    this.enforceContainment = function (object, index) {
+        if (object[index] != null && object[index].collider != null) {
+            for(var i = 0; i < object.collider.length; i++) {
+                if (object.collider[i].topBound() <= 0) {
+                    object.physics.position.reverseYVector();
+                    return "top";
+                }
+                else if ((self.height - object.collider[i].bottomBound()) <= 0) {
+                    object.physics.position.reverseYVector();
+                    return "bottom";
+                }
+                if (object.collider[i].leftBound() <= 0) {
+                    object.physics.position.reverseXVector();
+                    return "left";
+                }
+                else if ((self.width - object.collider[i].rightBound) <= 0) {
+                    object.physics.position.reverseXVector();
+                    return "right";
+                }
             }
         }
         return null;
@@ -119,20 +148,22 @@ function Container(width, height) {
     If the given Object has collided with a border, that border is returned. This is separate from the 
     enforceContainment function to avoid unnecessary conditionals in this function.
     */
-    this.detectContainmentCollision = function(Object) {
-        if(object.collider != null) {
-            if (object.collider.topBound() <= 0) {
-                return "top";
-            }
-            else if ((self.height - object.collider.bottomBound()) <= 0) {
-                return "bottom";
-            }
-            if (object.collider.leftBound() <= 0) {
-                return "left";
-            }
-            else if ((self.width - object.collider.rightBound) <= 0) {
-                return "right";
+    this.detectContainmentCollision = function(object) {
+            if(object != null && object.collider != null) {
+                for (var i = 0; i < object.collider.length; i++) {
+                    if (object.collider[i].bound.topBound() <= 0) {
+                        return "top";
+                    }
+                    else if ((self.height - object.collider[i].bound.bottomBound()) <= 0) {
+                        return "bottom";
+                    }
+                    if (object.collider[i].bound.leftBound() <= 0) {
+                        return "left";
+                    }
+                    else if ((self.width - object.collider[i].bound.rightBound) <= 0) {
+                        return "right";
+                    }
+                }
             }
         }
-    }
 }

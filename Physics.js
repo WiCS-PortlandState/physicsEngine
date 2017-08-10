@@ -5,7 +5,7 @@ account. It should be used by calling update at specified intervals to make an o
 its environment.
 */
 function Physics() {
-    this.position = new Position(0, 0, 0);
+    this.position = new Position(0, 0);
     this.orientation = new Orientation();
     this.angularDrag = 0;
     this.drag = 0;
@@ -19,23 +19,21 @@ function Physics() {
     rotation.
     */
     this.update = function() {
-        this.position.update();
-        this.orientation.update();
-        this.position.vector.applyDrag(drag);
-        this.orientation.applyAngularDrag(angularDrag);
+        self.position.update();
+        self.orientation.update();
+        self.position.vector.applyDrag(self.drag);
+        self.orientation.applyAngularDrag(self.angularDrag);
     }
 
     // Builder functions
 
-    this.withPosition = function(x, y) {
-        self.x = x;
-        self.y = y;
+    this.withPosition = function(position) {
+        self.position = position;
         return self;
     }
 
-    this.withVector = function(x, y) {
-        self.position.vector.x = x;
-        self.position.vector.y = y;
+    this.withVector = function(vector) {
+        self.position.vector = vector
         return self;
     }
 

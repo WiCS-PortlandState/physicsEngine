@@ -7,6 +7,7 @@ on the object's position (defined by the Physics object)
 function Object() {
     this.physics = null;
     this.collider = [];
+    this.graphic = null;
     var self = this;
 
     /*
@@ -28,8 +29,13 @@ function Object() {
         return false;
     }
 
+    this.update = function() {
+        if(self.physics != null) self.physics.update();
+        if(self.graphic != null) self.graphic.update();
+    }
+
     this.addCollider = function(collider) {
-        self.collider.add(collider);
+        self.collider.push(collider);
     }
 
     // Builder functions
@@ -40,7 +46,12 @@ function Object() {
     }
 
     this.withCollider = function(collider) {
-        self.collider.add(collider);
+        self.collider.push(collider);
+        return self;
+    }
+
+    this.withGraphic = function(graphic, context) {
+        self.graphic = graphic.withContext(context);
         return self;
     }
 
