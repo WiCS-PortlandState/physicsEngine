@@ -1,4 +1,4 @@
-function Controller() {
+function InputController() {
     this.events = [];
     var self = this;
 
