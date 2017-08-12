@@ -16,7 +16,9 @@
     var context = document.getElementById("gameCanvas").getContext("2d");
     var space = new Space()
         .withContainer(new Container(800, 600))
-        .withContext(context);
+        .withContext(context)
+        .withGravity(.5)
+        .withFPS(45);
     var physics = new Physics()
         .withDrag(0.1)
         .withPosition(new Position(400, 300));
