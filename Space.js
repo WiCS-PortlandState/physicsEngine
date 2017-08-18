@@ -44,14 +44,16 @@ function Space() {
                     event = new CustomEvent("Object Collision",
                         {
                             detail: {
-                                firstObject: self.objects[i].name,
-                                secondObject: self.objects[j].name
+                                firstObject: self.objects[i],
+                                secondObject: self.objects[j]
                             }
                         }
                     );
                     document.dispatchEvent(event);
                 }
             }
+            if(self.context != null) self.context.clearRect(0, 0, self.container.width, self.container.height);
+            self.container.enforceContainment(self.objects[i]);
             self.objects[i].physics.position.addVector(self.gravity);
             self.objects[i].update();
         }
@@ -74,13 +76,13 @@ function Space() {
         return self;
     }
 
-    this.withContainer = function (width, height) {
-        self.container = new Container(width, height);
+    this.withContainer = function (container) {
+        self.container = container;
         return self;
     }
 
     this.withGravity = function(amount) {
-        self.gravity = new Vector(0, amount * -1);
+        self.gravity = new Vector(0, amount);
         return self;
     }
 
@@ -117,22 +119,24 @@ function Container(width, height) {
             may be a null value if no collision.
     If a collision is detected, the object's vector is reversed and the border it collided with is returned.
     */
-    this.enforceContainment = function (object, index) {
-        if (object[index] != null && object[index].collider != null) {
+    this.enforceContainment = function (object) {
+        if (object != null && object.collider != null) {
             for(var i = 0; i < object.collider.length; i++) {
-                if (object.collider[i].topBound() <= 0) {
+                if (object.collider[i].bound.topBound() <= 0) {
+                    object.physics.position.y -= object.collider[i].bound.topBound();
                     object.physics.position.reverseYVector();
                     return "top";
                 }
-                else if ((self.height - object.collider[i].bottomBound()) <= 0) {
+                else if ((self.height - object.collider[i].bound.bottomBound()) <= 0) {
+                    object.physics.position.y = self.height - (object.collider[i].bound.bottomBound() - object.physics.position.y);
                     object.physics.position.reverseYVector();
                     return "bottom";
                 }
-                if (object.collider[i].leftBound() <= 0) {
+                if (object.collider[i].bound.leftBound() <= 0) {
                     object.physics.position.reverseXVector();
                     return "left";
                 }
-                else if ((self.width - object.collider[i].rightBound) <= 0) {
+                else if ((self.width - object.collider[i].bound.rightBound) <= 0) {
                     object.physics.position.reverseXVector();
                     return "right";
                 }
