@@ -1,0 +1,25 @@
+{
+  "name": "physics-engine",
+  "version": "1.0.0",
+  "description": "## How to contribute",
+  "main": "Collider.js",
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "jest": "^20.0.4"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "browserify index.js --standalone Engine > build.js",
+    "watch": "watchify index.js --standalone Engine -o build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WiCS-PortlandState/physicsEngine.git"
+  },
+  "author": "PSU-WiCS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WiCS-PortlandState/physicsEngine/"
+  },
+  "homepage": "https://github.com/WiCS-PortlandState/physicsEngine/#readme"
+}

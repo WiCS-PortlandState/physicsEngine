@@ -57,3 +57,5 @@ function Object() {
 
     return this;
 }
+
+module.exports = { Object };

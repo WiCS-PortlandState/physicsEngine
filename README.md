@@ -8,6 +8,33 @@ All pull requests must also be associated with an issue. If you want to contribu
 slated as an issue, you must first create an issue so your pull request can be considered. A PR with 
 no associated issue will not be merged. Once you have made a PR, request a review from one of the maintainers. 
 
+## Building the project
+
+To get started, ensure that you have [Node.js](https://nodejs.org/en/) installed. Then clone this repository and install the dependencies, like this:
+```
+npm install
+```
+Now, to build the single, browser-ready library, run the build task, like this:
+```
+npm run build
+```
+The library will be output as `build.js`. You can see a demo by starting a local web server (of any kind you like) and viewing the `test.html` file.
+
+If you're working on some changes and re-running the build task over and over gets tedious, there is also a watch command which will watch for any changes you make and automatically run the build. Start it like this:
+
+```
+npm run watch
+```
+
+## Running the tests
+
+This library uses the [Jest](https://facebook.github.io/jest/) library for testing. To run the tests:
+```
+npm run test
+```
+After the tests run, you will see a coverage report printed to the
+screen and generated in the coverage/ folder.
+
 ## Style guide
 
 ### object and file styles
