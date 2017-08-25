@@ -222,3 +222,5 @@ function Orientation() {
 
     return this;
 }
+
+module.exports = { Orientation, Physics, Position, Vector };

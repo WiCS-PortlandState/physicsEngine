@@ -44,3 +44,5 @@ function Circle(r) {
 
     return this;
 }
+
+module.exports = { Circle, Graphic };

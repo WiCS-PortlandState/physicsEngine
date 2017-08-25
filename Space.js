@@ -1,3 +1,4 @@
+const Vector = require("./Physics.js").Vector;
 /*
 This class represents the viewport that the user is gaming in. It deals with updating the 
 viewport and is where all the objects associated with viewport are stored. Its main responsibilities 
@@ -171,3 +172,5 @@ function Container(width, height) {
             }
         }
 }
+
+module.exports = { Container, Space };

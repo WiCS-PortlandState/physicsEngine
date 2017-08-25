@@ -1,3 +1,5 @@
+const Position = require('./Physics.js').Position;
+
 /*
 This class governs collisions between objects and between the outside borders 
 of the game Space. Must be created with a Physics object (governs the behavior post-collision) 
@@ -51,3 +53,5 @@ function CircularBound(radius, centerPosition, physics) {
         return new Position(self.physics.position.x - self.offsetX, self.physics.position.y - self.offsetY);
     }
 }
+
+module.exports = { Collider, CircularBound }

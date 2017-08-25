@@ -7,28 +7,26 @@
 <body>
 <canvas id="gameCanvas" width="800" height="600"></canvas>
 
-<script src="Physics.js"></script>
-<script src="Graphic.js"></script>
-<script src="Collider.js"></script>
-<script src="Object.js"></script>
-<script src="Space.js"></script>
+<script src="./build.js"></script>
 <script>
+  document.addEventListener("DOMContentLoaded", function(e) {
     // Game setup
     var context = document.getElementById("gameCanvas").getContext("2d");
-    var space = new Space()
-        .withContainer(new Container(800, 600))
+    var space = new Engine.Space()
+        .withContainer(new Engine.Container(800, 600))
         .withContext(context)
         .withGravity(.5)
         .withFPS(45);
-    var physics = new Physics()
+    var physics = new Engine.Physics()
         .withDrag(0.1)
-        .withPosition(new Position(400, 300));
+        .withPosition(new Engine.Position(400, 300));
 
-    space.addObject(new Object()
+    space.addObject(new Engine.Object()
         .withPhysics(physics)
-        .withCollider(new Collider(new CircularBound(50, physics.position, physics)))
-        .withGraphic(new Graphic().withObject(new Circle(50), physics.position), context));
+        .withCollider(new Engine.Collider(new Engine.CircularBound(50, physics.position, physics)))
+        .withGraphic(new Engine.Graphic().withObject(new Engine.Circle(50), physics.position), context));
     space.startAnimation();
+  });
 </script>
 </body>
 </html>
